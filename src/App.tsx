@@ -237,53 +237,56 @@ function App() {
           <h2 style={{ textAlign: 'center', marginBottom: '3rem' }}>Our Tour Packages</h2>
           <div className="decorative-border"></div>
           <div className="card-grid">
-            <div className="card">
-              <img src={pyramidImg} alt="Pyramid Tour" className="egyptian-image" />
-              <div className="card-icon">🏛️</div>
-              <h3>Pyramid Explorer</h3>
-              <p>Visit the Great Pyramid of Giza, one of the Seven Wonders of the Ancient World. Explore the mysterious chambers and learn about ancient Egyptian burial practices.</p>
-              <div style={{ marginTop: '1.5rem' }}>
-                <strong style={{ color: 'var(--egyptian-gold)' }}>From $299</strong>
-                <br />
-                <small style={{ color: 'var(--text-light)' }}>3 days / 2 nights</small>
+            {tourPackages.map((tour, index) => (
+              <div key={tour.id} className="card" style={{ animationDelay: `${index * 0.1}s` }}>
+                <img src={tour.image} alt={`${tour.name} Tour`} className="egyptian-image" />
+                <div className="card-icon">{tour.icon}</div>
+                <h3>{tour.name}</h3>
+                <p>{tour.description}</p>
+                
+                {/* Tour Details */}
+                <div style={{ marginTop: '1rem', textAlign: 'left', fontSize: '0.9rem', color: 'var(--text-light)' }}>
+                  <div><strong>Difficulty:</strong> {tour.difficulty}</div>
+                  <div><strong>Group Size:</strong> {tour.groupSize}</div>
+                </div>
+                
+                {/* Tour Highlights */}
+                <div style={{ marginTop: '1rem', textAlign: 'left' }}>
+                  <strong style={{ fontSize: '0.9rem', color: 'var(--egyptian-blue)' }}>Highlights:</strong>
+                  <ul style={{ fontSize: '0.8rem', color: 'var(--text-light)', marginTop: '0.5rem', paddingLeft: '1rem' }}>
+                    {tour.highlights.slice(0, 3).map((highlight, idx) => (
+                      <li key={idx}>{highlight}</li>
+                    ))}
+                  </ul>
+                </div>
+                
+                {/* Pricing */}
+                <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
+                  <strong style={{ color: 'var(--egyptian-gold)', fontSize: '1.2rem' }}>From {tour.price}</strong>
+                  <br />
+                  <small style={{ color: 'var(--text-light)' }}>{tour.duration}</small>
+                </div>
+                
+                {/* Call to Action */}
+                <div style={{ marginTop: '1rem', textAlign: 'center' }}>
+                  <button className="btn btn-primary" style={{ fontSize: '0.9rem', padding: '0.5rem 1rem' }}>
+                    Learn More
+                  </button>
+                </div>
               </div>
-            </div>
-
-            <div className="card">
-              <img src={sphinxImg} alt="Sphinx Tour" className="egyptian-image" />
-              <div className="card-icon">🦁</div>
-              <h3>Sphinx & Secrets</h3>
-              <p>Uncover the mysteries of the Great Sphinx and explore the ancient necropolis of Giza. Discover hidden chambers and ancient Egyptian mythology.</p>
-              <div style={{ marginTop: '1.5rem' }}>
-                <strong style={{ color: 'var(--egyptian-gold)' }}>From $399</strong>
-                <br />
-                <small style={{ color: 'var(--text-light)' }}>4 days / 3 nights</small>
-              </div>
-            </div>
-
-            <div className="card">
-              <img src={templeImg} alt="Temple Tour" className="egyptian-image" />
-              <div className="card-icon">⛩️</div>
-              <h3>Temple Treasures</h3>
-              <p>Journey through the magnificent temples of Luxor and Karnak. Experience the grandeur of ancient Egyptian architecture and religious ceremonies.</p>
-              <div style={{ marginTop: '1.5rem' }}>
-                <strong style={{ color: 'var(--egyptian-gold)' }}>From $599</strong>
-                <br />
-                <small style={{ color: 'var(--text-light)' }}>7 days / 6 nights</small>
-              </div>
-            </div>
-
-            <div className="card">
-              <img src={pharaohImg} alt="Pharaoh Tour" className="egyptian-image" />
-              <div className="card-icon">👑</div>
-              <h3>Pharaoh's Legacy</h3>
-              <p>Follow in the footsteps of legendary pharaohs. Visit royal tombs, treasure chambers, and learn about the golden age of ancient Egypt.</p>
-              <div style={{ marginTop: '1.5rem' }}>
-                <strong style={{ color: 'var(--egyptian-gold)' }}>From $899</strong>
-                <br />
-                <small style={{ color: 'var(--text-light)' }}>10 days / 9 nights</small>
-              </div>
-            </div>
+            ))}
+          </div>
+          
+          {/* Additional Tour Packages Note */}
+          <div style={{ textAlign: 'center', marginTop: '3rem', padding: '2rem', background: 'rgba(212, 175, 55, 0.1)', borderRadius: '8px' }}>
+            <h3 style={{ color: 'var(--egyptian-blue)', marginBottom: '1rem' }}>Custom Tours Available</h3>
+            <p style={{ color: 'var(--text-secondary)' }}>
+              Don't see the perfect tour for you? We specialize in creating custom Egyptian adventures tailored to your interests, 
+              schedule, and budget. Contact us to design your dream Egyptian journey.
+            </p>
+            <button className="btn btn-secondary" style={{ marginTop: '1rem' }} onClick={() => scrollToSection('contact')}>
+              Plan Custom Tour
+            </button>
           </div>
         </div>
       </section>
@@ -445,6 +448,7 @@ function App() {
 }
 
 export default App
+
 
 
 
