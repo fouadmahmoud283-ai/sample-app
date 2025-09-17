@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import './App.css'
 import pyramidImg from './assets/egypt/pyramid.svg'
 import sphinxImg from './assets/egypt/sphinx.svg'
@@ -6,12 +7,66 @@ import pharaohImg from './assets/egypt/pharaoh.svg'
 import obeliskImg from './assets/egypt/obelisk.svg'
 
 function App() {
+  // Enhanced smooth scrolling with offset for fixed header
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const headerOffset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
     }
   };
+
+  // Intersection Observer for scroll-triggered animations
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+        }
+      });
+    }, observerOptions);
+
+    // Observe all sections and cards for scroll animations
+    const elementsToObserve = document.querySelectorAll('.scroll-animate, .section, .card');
+    elementsToObserve.forEach((el) => observer.observe(el));
+
+    // Parallax effect for hero section
+    const handleScroll = () => {
+      const scrolled = window.pageYOffset;
+      const hero = document.querySelector('.hero') as HTMLElement;
+      if (hero) {
+        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    // Cleanup
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  // Add staggered animation to navigation items
+  useEffect(() => {
+    const navItems = document.querySelectorAll('.nav-links a');
+    navItems.forEach((item, index) => {
+      (item as HTMLElement).style.animationDelay = `${index * 0.1}s`;
+      item.classList.add('slide-in-top');
+    });
+  }, []);
 
   return (
     <>
@@ -259,4 +314,5 @@ function App() {
 }
 
 export default App
+
 
