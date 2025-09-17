@@ -6,6 +6,137 @@ import templeImg from './assets/egypt/temple.svg'
 import pharaohImg from './assets/egypt/pharaoh.svg'
 import obeliskImg from './assets/egypt/obelisk.svg'
 
+// PLACEHOLDER DATA - EASILY REPLACEABLE
+// Tour Packages Data - Replace with real tour information
+const tourPackages = [
+  {
+    id: 1,
+    name: "Pyramid Explorer",
+    image: pyramidImg,
+    icon: "🏛️",
+    description: "Visit the Great Pyramid of Giza, one of the Seven Wonders of the Ancient World. Explore the mysterious chambers and learn about ancient Egyptian burial practices.",
+    price: "$299",
+    duration: "3 days / 2 nights",
+    highlights: ["Great Pyramid of Giza", "Pyramid chambers exploration", "Ancient burial practices", "Expert Egyptologist guide"],
+    difficulty: "Easy",
+    groupSize: "Max 12 people"
+  },
+  {
+    id: 2,
+    name: "Sphinx & Secrets",
+    image: sphinxImg,
+    icon: "🦁",
+    description: "Uncover the mysteries of the Great Sphinx and explore the ancient necropolis of Giza. Discover hidden chambers and ancient Egyptian mythology.",
+    price: "$399",
+    duration: "4 days / 3 nights",
+    highlights: ["Great Sphinx exploration", "Giza necropolis", "Hidden chambers", "Egyptian mythology stories"],
+    difficulty: "Easy",
+    groupSize: "Max 10 people"
+  },
+  {
+    id: 3,
+    name: "Temple Treasures",
+    image: templeImg,
+    icon: "⛩️",
+    description: "Journey through the magnificent temples of Luxor and Karnak. Experience the grandeur of ancient Egyptian architecture and religious ceremonies.",
+    price: "$599",
+    duration: "7 days / 6 nights",
+    highlights: ["Luxor Temple", "Karnak Temple Complex", "Ancient architecture", "Religious ceremonies"],
+    difficulty: "Moderate",
+    groupSize: "Max 15 people"
+  },
+  {
+    id: 4,
+    name: "Pharaoh's Legacy",
+    image: pharaohImg,
+    icon: "👑",
+    description: "Follow in the footsteps of legendary pharaohs. Visit royal tombs, treasure chambers, and learn about the golden age of ancient Egypt.",
+    price: "$899",
+    duration: "10 days / 9 nights",
+    highlights: ["Royal tombs", "Treasure chambers", "Valley of the Kings", "Pharaoh histories"],
+    difficulty: "Moderate",
+    groupSize: "Max 8 people"
+  }
+];
+
+// Destinations Data - Replace with real destination information
+const destinations = [
+  {
+    id: 1,
+    name: "Giza Pyramid Complex",
+    image: pyramidImg,
+    description: "Home to the Great Pyramid, the Sphinx, and ancient burial grounds. Experience the last remaining Wonder of the Ancient World.",
+    attractions: [
+      "Great Pyramid of Khufu",
+      "Pyramid of Khafre", 
+      "Pyramid of Menkaure",
+      "The Great Sphinx"
+    ],
+    bestTime: "October to April",
+    duration: "Half day to full day",
+    location: "Giza, Egypt"
+  },
+  {
+    id: 2,
+    name: "Luxor - Ancient Thebes",
+    image: templeImg,
+    description: "The world's greatest open-air museum, featuring magnificent temples and royal tombs along the Nile River.",
+    attractions: [
+      "Karnak Temple Complex",
+      "Luxor Temple",
+      "Valley of the Kings",
+      "Temple of Hatshepsut"
+    ],
+    bestTime: "November to March",
+    duration: "2-3 days recommended",
+    location: "Luxor, Egypt"
+  },
+  {
+    id: 3,
+    name: "Cairo - City of Pharaohs",
+    image: obeliskImg,
+    description: "Explore the bustling capital with its world-renowned museums and Islamic architecture alongside ancient wonders.",
+    attractions: [
+      "Egyptian Museum",
+      "Coptic Cairo",
+      "Islamic Cairo",
+      "Khan el-Khalili Bazaar"
+    ],
+    bestTime: "October to April",
+    duration: "2-4 days recommended",
+    location: "Cairo, Egypt"
+  }
+];
+
+// Company Information - Replace with real company details
+const companyInfo = {
+  name: "Egyptian Pharaoh Tours",
+  tagline: "Your Gateway to Ancient Egypt",
+  description: "For over 20 years, Egyptian Pharaoh Tours has been the premier choice for travelers seeking authentic Egyptian experiences. Our expert Egyptologists and local guides bring ancient history to life with passion and knowledge.",
+  features: [
+    "Licensed Egyptologist guides",
+    "Small group experiences (max 12 people)",
+    "Exclusive access to restricted sites",
+    "Luxury accommodations",
+    "24/7 customer support",
+    "Sustainable tourism practices"
+  ],
+  contact: {
+    address: "123 Nile Avenue, Cairo, Egypt",
+    phone: "+20 2 1234 5678",
+    email: "info@egyptianpharaohtours.com",
+    hours: {
+      weekdays: "Sunday - Thursday: 9:00 AM - 6:00 PM",
+      weekends: "Friday - Saturday: 10:00 AM - 4:00 PM"
+    }
+  },
+  certifications: [
+    "Licensed by Egyptian Ministry of Tourism",
+    "IATA Certified",
+    "Sustainable Tourism Partner"
+  ]
+};
+
 function App() {
   // Enhanced smooth scrolling with offset for fixed header
   const scrollToSection = (sectionId: string) => {
@@ -314,5 +445,6 @@ function App() {
 }
 
 export default App
+
 
 
