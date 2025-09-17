@@ -1,35 +1,454 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect } from 'react'
 import './App.css'
+import pyramidImg from './assets/egypt/pyramid.svg'
+import sphinxImg from './assets/egypt/sphinx.svg'
+import templeImg from './assets/egypt/temple.svg'
+import pharaohImg from './assets/egypt/pharaoh.svg'
+import obeliskImg from './assets/egypt/obelisk.svg'
+
+// PLACEHOLDER DATA - EASILY REPLACEABLE
+// Tour Packages Data - Replace with real tour information
+const tourPackages = [
+  {
+    id: 1,
+    name: "Pyramid Explorer",
+    image: pyramidImg,
+    icon: "🏛️",
+    description: "Visit the Great Pyramid of Giza, one of the Seven Wonders of the Ancient World. Explore the mysterious chambers and learn about ancient Egyptian burial practices.",
+    price: "$299",
+    duration: "3 days / 2 nights",
+    highlights: ["Great Pyramid of Giza", "Pyramid chambers exploration", "Ancient burial practices", "Expert Egyptologist guide"],
+    difficulty: "Easy",
+    groupSize: "Max 12 people"
+  },
+  {
+    id: 2,
+    name: "Sphinx & Secrets",
+    image: sphinxImg,
+    icon: "🦁",
+    description: "Uncover the mysteries of the Great Sphinx and explore the ancient necropolis of Giza. Discover hidden chambers and ancient Egyptian mythology.",
+    price: "$399",
+    duration: "4 days / 3 nights",
+    highlights: ["Great Sphinx exploration", "Giza necropolis", "Hidden chambers", "Egyptian mythology stories"],
+    difficulty: "Easy",
+    groupSize: "Max 10 people"
+  },
+  {
+    id: 3,
+    name: "Temple Treasures",
+    image: templeImg,
+    icon: "⛩️",
+    description: "Journey through the magnificent temples of Luxor and Karnak. Experience the grandeur of ancient Egyptian architecture and religious ceremonies.",
+    price: "$599",
+    duration: "7 days / 6 nights",
+    highlights: ["Luxor Temple", "Karnak Temple Complex", "Ancient architecture", "Religious ceremonies"],
+    difficulty: "Moderate",
+    groupSize: "Max 15 people"
+  },
+  {
+    id: 4,
+    name: "Pharaoh's Legacy",
+    image: pharaohImg,
+    icon: "👑",
+    description: "Follow in the footsteps of legendary pharaohs. Visit royal tombs, treasure chambers, and learn about the golden age of ancient Egypt.",
+    price: "$899",
+    duration: "10 days / 9 nights",
+    highlights: ["Royal tombs", "Treasure chambers", "Valley of the Kings", "Pharaoh histories"],
+    difficulty: "Moderate",
+    groupSize: "Max 8 people"
+  }
+];
+
+// Destinations Data - Replace with real destination information
+const destinations = [
+  {
+    id: 1,
+    name: "Giza Pyramid Complex",
+    image: pyramidImg,
+    description: "Home to the Great Pyramid, the Sphinx, and ancient burial grounds. Experience the last remaining Wonder of the Ancient World.",
+    attractions: [
+      "Great Pyramid of Khufu",
+      "Pyramid of Khafre", 
+      "Pyramid of Menkaure",
+      "The Great Sphinx"
+    ],
+    bestTime: "October to April",
+    duration: "Half day to full day",
+    location: "Giza, Egypt"
+  },
+  {
+    id: 2,
+    name: "Luxor - Ancient Thebes",
+    image: templeImg,
+    description: "The world's greatest open-air museum, featuring magnificent temples and royal tombs along the Nile River.",
+    attractions: [
+      "Karnak Temple Complex",
+      "Luxor Temple",
+      "Valley of the Kings",
+      "Temple of Hatshepsut"
+    ],
+    bestTime: "November to March",
+    duration: "2-3 days recommended",
+    location: "Luxor, Egypt"
+  },
+  {
+    id: 3,
+    name: "Cairo - City of Pharaohs",
+    image: obeliskImg,
+    description: "Explore the bustling capital with its world-renowned museums and Islamic architecture alongside ancient wonders.",
+    attractions: [
+      "Egyptian Museum",
+      "Coptic Cairo",
+      "Islamic Cairo",
+      "Khan el-Khalili Bazaar"
+    ],
+    bestTime: "October to April",
+    duration: "2-4 days recommended",
+    location: "Cairo, Egypt"
+  }
+];
+
+// Company Information - Replace with real company details
+const companyInfo = {
+  name: "Egyptian Pharaoh Tours",
+  tagline: "Your Gateway to Ancient Egypt",
+  description: "For over 20 years, Egyptian Pharaoh Tours has been the premier choice for travelers seeking authentic Egyptian experiences. Our expert Egyptologists and local guides bring ancient history to life with passion and knowledge.",
+  features: [
+    "Licensed Egyptologist guides",
+    "Small group experiences (max 12 people)",
+    "Exclusive access to restricted sites",
+    "Luxury accommodations",
+    "24/7 customer support",
+    "Sustainable tourism practices"
+  ],
+  contact: {
+    address: "123 Nile Avenue, Cairo, Egypt",
+    phone: "+20 2 1234 5678",
+    email: "info@egyptianpharaohtours.com",
+    hours: {
+      weekdays: "Sunday - Thursday: 9:00 AM - 6:00 PM",
+      weekends: "Friday - Saturday: 10:00 AM - 4:00 PM"
+    }
+  },
+  certifications: [
+    "Licensed by Egyptian Ministry of Tourism",
+    "IATA Certified",
+    "Sustainable Tourism Partner"
+  ]
+};
 
 function App() {
-  const [count, setCount] = useState(0)
+  // Enhanced smooth scrolling with offset for fixed header
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const headerOffset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  // Intersection Observer for scroll-triggered animations
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+        }
+      });
+    }, observerOptions);
+
+    // Observe all sections and cards for scroll animations
+    const elementsToObserve = document.querySelectorAll('.scroll-animate, .section, .card');
+    elementsToObserve.forEach((el) => observer.observe(el));
+
+    // Parallax effect for hero section
+    const handleScroll = () => {
+      const scrolled = window.pageYOffset;
+      const hero = document.querySelector('.hero') as HTMLElement;
+      if (hero) {
+        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    // Cleanup
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  // Add staggered animation to navigation items
+  useEffect(() => {
+    const navItems = document.querySelectorAll('.nav-links a');
+    navItems.forEach((item, index) => {
+      (item as HTMLElement).style.animationDelay = `${index * 0.1}s`;
+      item.classList.add('slide-in-top');
+    });
+  }, []);
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      {/* Header/Navigation */}
+      <header className="header">
+        <nav className="nav">
+          <a href="#" className="logo-text">Egyptian Pharaoh Tours</a>
+          <ul className="nav-links">
+            <li><a href="#hero" onClick={() => scrollToSection('hero')}>Home</a></li>
+            <li><a href="#packages" onClick={() => scrollToSection('packages')}>Tours</a></li>
+            <li><a href="#destinations" onClick={() => scrollToSection('destinations')}>Destinations</a></li>
+            <li><a href="#about" onClick={() => scrollToSection('about')}>About</a></li>
+            <li><a href="#contact" onClick={() => scrollToSection('contact')}>Contact</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      {/* Hero Section */}
+      <section id="hero" className="hero">
+        <div className="hero-content fade-in-up">
+          <h1>Discover Ancient Egypt</h1>
+          <p>Journey through millennia of history with Egyptian Pharaoh Tours. Experience the wonders of the pyramids, temples, and treasures of the pharaohs with our expert guides.</p>
+          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <a href="#packages" className="btn btn-primary" onClick={() => scrollToSection('packages')}>
+              Explore Tours
+            </a>
+            <a href="#contact" className="btn btn-secondary" onClick={() => scrollToSection('contact')}>
+              Plan Your Journey
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Tour Packages Section */}
+      <section id="packages" className="section">
+        <div className="fade-in-up">
+          <h2 style={{ textAlign: 'center', marginBottom: '3rem' }}>Our Tour Packages</h2>
+          <div className="decorative-border"></div>
+          <div className="card-grid">
+            {tourPackages.map((tour, index) => (
+              <div key={tour.id} className="card" style={{ animationDelay: `${index * 0.1}s` }}>
+                <img src={tour.image} alt={`${tour.name} Tour`} className="egyptian-image" />
+                <div className="card-icon">{tour.icon}</div>
+                <h3>{tour.name}</h3>
+                <p>{tour.description}</p>
+                
+                {/* Tour Details */}
+                <div style={{ marginTop: '1rem', textAlign: 'left', fontSize: '0.9rem', color: 'var(--text-light)' }}>
+                  <div><strong>Difficulty:</strong> {tour.difficulty}</div>
+                  <div><strong>Group Size:</strong> {tour.groupSize}</div>
+                </div>
+                
+                {/* Tour Highlights */}
+                <div style={{ marginTop: '1rem', textAlign: 'left' }}>
+                  <strong style={{ fontSize: '0.9rem', color: 'var(--egyptian-blue)' }}>Highlights:</strong>
+                  <ul style={{ fontSize: '0.8rem', color: 'var(--text-light)', marginTop: '0.5rem', paddingLeft: '1rem' }}>
+                    {tour.highlights.slice(0, 3).map((highlight, idx) => (
+                      <li key={idx}>{highlight}</li>
+                    ))}
+                  </ul>
+                </div>
+                
+                {/* Pricing */}
+                <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
+                  <strong style={{ color: 'var(--egyptian-gold)', fontSize: '1.2rem' }}>From {tour.price}</strong>
+                  <br />
+                  <small style={{ color: 'var(--text-light)' }}>{tour.duration}</small>
+                </div>
+                
+                {/* Call to Action */}
+                <div style={{ marginTop: '1rem', textAlign: 'center' }}>
+                  <button className="btn btn-primary" style={{ fontSize: '0.9rem', padding: '0.5rem 1rem' }}>
+                    Learn More
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          {/* Additional Tour Packages Note */}
+          <div style={{ textAlign: 'center', marginTop: '3rem', padding: '2rem', background: 'rgba(212, 175, 55, 0.1)', borderRadius: '8px' }}>
+            <h3 style={{ color: 'var(--egyptian-blue)', marginBottom: '1rem' }}>Custom Tours Available</h3>
+            <p style={{ color: 'var(--text-secondary)' }}>
+              Don't see the perfect tour for you? We specialize in creating custom Egyptian adventures tailored to your interests, 
+              schedule, and budget. Contact us to design your dream Egyptian journey.
+            </p>
+            <button className="btn btn-secondary" style={{ marginTop: '1rem' }} onClick={() => scrollToSection('contact')}>
+              Plan Custom Tour
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Destinations Section */}
+      <section id="destinations" className="section section-alt">
+        <div className="fade-in-up">
+          <h2 style={{ textAlign: 'center', marginBottom: '3rem' }}>Iconic Destinations</h2>
+          <div className="decorative-border"></div>
+          <div className="card-grid">
+            <div className="card">
+              <img src={pyramidImg} alt="Giza Pyramids" className="egyptian-image" />
+              <h3>Giza Pyramid Complex</h3>
+              <p>Home to the Great Pyramid, the Sphinx, and ancient burial grounds. Experience the last remaining Wonder of the Ancient World.</p>
+              <ul style={{ textAlign: 'left', color: 'var(--text-secondary)', marginTop: '1rem' }}>
+                <li>Great Pyramid of Khufu</li>
+                <li>Pyramid of Khafre</li>
+                <li>Pyramid of Menkaure</li>
+                <li>The Great Sphinx</li>
+              </ul>
+            </div>
+
+            <div className="card">
+              <img src={templeImg} alt="Luxor Temples" className="egyptian-image" />
+              <h3>Luxor - Ancient Thebes</h3>
+              <p>The world's greatest open-air museum, featuring magnificent temples and royal tombs along the Nile River.</p>
+              <ul style={{ textAlign: 'left', color: 'var(--text-secondary)', marginTop: '1rem' }}>
+                <li>Karnak Temple Complex</li>
+                <li>Luxor Temple</li>
+                <li>Valley of the Kings</li>
+                <li>Temple of Hatshepsut</li>
+              </ul>
+            </div>
+
+            <div className="card">
+              <img src={obeliskImg} alt="Cairo Museums" className="egyptian-image" />
+              <h3>Cairo - City of Pharaohs</h3>
+              <p>Explore the bustling capital with its world-renowned museums and Islamic architecture alongside ancient wonders.</p>
+              <ul style={{ textAlign: 'left', color: 'var(--text-secondary)', marginTop: '1rem' }}>
+                <li>Egyptian Museum</li>
+                <li>Coptic Cairo</li>
+                <li>Islamic Cairo</li>
+                <li>Khan el-Khalili Bazaar</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* About Us Section */}
+      <section id="about" className="section">
+        <div className="fade-in-up">
+          <h2 style={{ textAlign: 'center', marginBottom: '3rem' }}>About Egyptian Pharaoh Tours</h2>
+          <div className="decorative-border"></div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', alignItems: 'center', marginTop: '3rem' }}>
+            <div>
+              <img src={pharaohImg} alt="Egyptian Heritage" className="egyptian-image" style={{ height: '300px' }} />
+            </div>
+            <div>
+              <h3>Your Gateway to Ancient Egypt</h3>
+              <p>For over 20 years, Egyptian Pharaoh Tours has been the premier choice for travelers seeking authentic Egyptian experiences. Our expert Egyptologists and local guides bring ancient history to life with passion and knowledge.</p>
+              
+              <h3>Why Choose Us?</h3>
+              <ul style={{ color: 'var(--text-secondary)', lineHeight: '1.8' }}>
+                <li>✓ Licensed Egyptologist guides</li>
+                <li>✓ Small group experiences (max 12 people)</li>
+                <li>✓ Exclusive access to restricted sites</li>
+                <li>✓ Luxury accommodations</li>
+                <li>✓ 24/7 customer support</li>
+                <li>✓ Sustainable tourism practices</li>
+              </ul>
+
+              <div style={{ marginTop: '2rem' }}>
+                <a href="#contact" className="btn btn-primary" onClick={() => scrollToSection('contact')}>
+                  Start Your Adventure
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="section section-alt">
+        <div className="fade-in-up">
+          <h2 style={{ textAlign: 'center', marginBottom: '3rem' }}>Plan Your Egyptian Adventure</h2>
+          <div className="decorative-border"></div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', marginTop: '3rem' }}>
+            <div className="card">
+              <h3>Contact Information</h3>
+              <div style={{ textAlign: 'left' }}>
+                <p><strong>📍 Address:</strong><br />
+                123 Nile Avenue, Cairo, Egypt</p>
+                
+                <p><strong>📞 Phone:</strong><br />
+                +20 2 1234 5678</p>
+                
+                <p><strong>✉️ Email:</strong><br />
+                info@egyptianpharaohtours.com</p>
+                
+                <p><strong>🕒 Office Hours:</strong><br />
+                Sunday - Thursday: 9:00 AM - 6:00 PM<br />
+                Friday - Saturday: 10:00 AM - 4:00 PM</p>
+              </div>
+            </div>
+
+            <div className="card">
+              <h3>Quick Inquiry</h3>
+              <form style={{ textAlign: 'left' }}>
+                <div style={{ marginBottom: '1rem' }}>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Name:</label>
+                  <input type="text" style={{ width: '100%', padding: '0.5rem', borderRadius: '4px', border: '1px solid #ccc' }} />
+                </div>
+                
+                <div style={{ marginBottom: '1rem' }}>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Email:</label>
+                  <input type="email" style={{ width: '100%', padding: '0.5rem', borderRadius: '4px', border: '1px solid #ccc' }} />
+                </div>
+                
+                <div style={{ marginBottom: '1rem' }}>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Preferred Tour:</label>
+                  <select style={{ width: '100%', padding: '0.5rem', borderRadius: '4px', border: '1px solid #ccc' }}>
+                    <option>Select a tour package</option>
+                    <option>Pyramid Explorer</option>
+                    <option>Sphinx & Secrets</option>
+                    <option>Temple Treasures</option>
+                    <option>Pharaoh's Legacy</option>
+                  </select>
+                </div>
+                
+                <div style={{ marginBottom: '1rem' }}>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Message:</label>
+                  <textarea rows={4} style={{ width: '100%', padding: '0.5rem', borderRadius: '4px', border: '1px solid #ccc', resize: 'vertical' }}></textarea>
+                </div>
+                
+                <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>
+                  Send Inquiry
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="footer">
+        <div className="footer-content">
+          <h3>Egyptian Pharaoh Tours</h3>
+          <p>Discover the wonders of ancient Egypt with expert guides and unforgettable experiences.</p>
+          <div className="decorative-border" style={{ margin: '2rem auto', maxWidth: '200px' }}></div>
+          <p>&copy; 2024 Egyptian Pharaoh Tours. All rights reserved.</p>
+          <p style={{ fontSize: '0.9rem', marginTop: '1rem' }}>
+            Licensed by Egyptian Ministry of Tourism | IATA Certified | Sustainable Tourism Partner
+          </p>
+        </div>
+      </footer>
     </>
   )
 }
 
 export default App
+
+
+
+

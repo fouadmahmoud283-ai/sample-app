@@ -1,0 +1,92 @@
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="pharaohGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#DEB887;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#D2B48C;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#BC9A6A;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#FFA500;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#B8860B;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="300" fill="#F4A460"/>
+  
+  <!-- Pharaoh head/face -->
+  <ellipse cx="200" cy="150" rx="60" ry="80" fill="url(#pharaohGradient)"/>
+  
+  <!-- Nemes headdress -->
+  <path d="M 140 100 Q 200 70 260 100 L 260 180 Q 230 190 200 180 Q 170 190 140 180 Z" fill="#4169E1" stroke="#191970" stroke-width="2"/>
+  
+  <!-- Headdress stripes -->
+  <g stroke="#FFD700" stroke-width="3" fill="none">
+    <path d="M 150 110 Q 200 85 250 110"/>
+    <path d="M 155 125 Q 200 100 245 125"/>
+    <path d="M 160 140 Q 200 115 240 140"/>
+    <path d="M 165 155 Q 200 130 235 155"/>
+  </g>
+  
+  <!-- Uraeus (cobra) on forehead -->
+  <path d="M 200 90 Q 195 85 200 80 Q 205 85 200 90" fill="#FFD700"/>
+  <circle cx="200" cy="85" r="3" fill="#FF0000"/>
+  
+  <!-- Eyes -->
+  <ellipse cx="180" cy="140" rx="12" ry="8" fill="#000"/>
+  <ellipse cx="220" cy="140" rx="12" ry="8" fill="#000"/>
+  <ellipse cx="180" cy="138" rx="4" ry="3" fill="#FFF"/>
+  <ellipse cx="220" cy="138" rx="4" ry="3" fill="#FFF"/>
+  
+  <!-- Eye makeup (kohl) -->
+  <path d="M 165 135 Q 180 130 195 135" stroke="#000" stroke-width="2" fill="none"/>
+  <path d="M 205 135 Q 220 130 235 135" stroke="#000" stroke-width="2" fill="none"/>
+  
+  <!-- Nose -->
+  <path d="M 200 150 L 195 165 L 205 165 Z" fill="#BC9A6A"/>
+  
+  <!-- Mouth -->
+  <path d="M 185 180 Q 200 185 215 180" stroke="#8B4513" stroke-width="2" fill="none"/>
+  
+  <!-- Beard (false beard) -->
+  <rect x="195" y="200" width="10" height="40" fill="#4169E1" rx="5"/>
+  <g stroke="#FFD700" stroke-width="1" fill="none">
+    <line x1="197" y1="210" x2="203" y2="210"/>
+    <line x1="197" y1="220" x2="203" y2="220"/>
+    <line x1="197" y1="230" x2="203" y2="230"/>
+  </g>
+  
+  <!-- Collar/necklace -->
+  <ellipse cx="200" cy="240" rx="80" ry="20" fill="url(#goldGradient)"/>
+  <ellipse cx="200" cy="240" rx="70" ry="15" fill="#4169E1"/>
+  <ellipse cx="200" cy="240" rx="60" ry="10" fill="url(#goldGradient)"/>
+  
+  <!-- Decorative elements on collar -->
+  <g fill="#FF0000">
+    <circle cx="160" cy="240" r="3"/>
+    <circle cx="180" cy="235" r="3"/>
+    <circle cx="200" cy="232" r="3"/>
+    <circle cx="220" cy="235" r="3"/>
+    <circle cx="240" cy="240" r="3"/>
+  </g>
+  
+  <!-- Arms/shoulders -->
+  <ellipse cx="120" cy="260" rx="30" ry="20" fill="url(#pharaohGradient)"/>
+  <ellipse cx="280" cy="260" rx="30" ry="20" fill="url(#pharaohGradient)"/>
+  
+  <!-- Golden armbands -->
+  <ellipse cx="120" cy="260" rx="35" ry="8" fill="url(#goldGradient)"/>
+  <ellipse cx="280" cy="260" rx="35" ry="8" fill="url(#goldGradient)"/>
+  
+  <!-- Hieroglyphic symbols in background -->
+  <g fill="#8B4513" opacity="0.3">
+    <rect x="50" y="50" width="4" height="12"/>
+    <circle cx="60" cy="56" r="3"/>
+    <path d="M 70 50 L 75 62 L 80 50" fill="none" stroke="#8B4513" stroke-width="2"/>
+    
+    <rect x="320" y="80" width="4" height="12"/>
+    <circle cx="330" cy="86" r="3"/>
+    <path d="M 340 80 L 345 92 L 350 80" fill="none" stroke="#8B4513" stroke-width="2"/>
+  </g>
+</svg>
